@@ -12,7 +12,6 @@ export default function useSaveUserData(): UseSaveUserDataReturn {
       let token: string | undefined;
       try {
         token = await getAccessTokenSilently();
-        console.log("Access token:", token);
       } catch (e) {
         console.error("Error getting access token:", e);
       }

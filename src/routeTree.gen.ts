@@ -13,13 +13,16 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as IndexcopyImport } from './routes/index copy'
+import { Route as DashboardImport } from './routes/dashboard'
 import { Route as AboutImport } from './routes/about'
+import { Route as LayoutImport } from './routes/_layout'
+import { Route as IndexImport } from './routes/index'
 import { Route as ManageAccountIndexImport } from './routes/manage-account/index'
 
 // Create Virtual Routes
 
 const NotFoundLazyImport = createFileRoute('/not-found')()
-const IndexLazyImport = createFileRoute('/')()
 
 // Create/Update Routes
 
@@ -28,15 +31,30 @@ const NotFoundLazyRoute = NotFoundLazyImport.update({
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/not-found.lazy').then((d) => d.Route))
 
+const IndexcopyRoute = IndexcopyImport.update({
+  path: '/index copy',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const DashboardRoute = DashboardImport.update({
+  path: '/dashboard',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const AboutRoute = AboutImport.update({
   path: '/about',
   getParentRoute: () => rootRoute,
 } as any)
 
-const IndexLazyRoute = IndexLazyImport.update({
+const LayoutRoute = LayoutImport.update({
+  id: '/_layout',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const IndexRoute = IndexImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
-} as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+} as any)
 
 const ManageAccountIndexRoute = ManageAccountIndexImport.update({
   path: '/manage-account/',
@@ -51,7 +69,14 @@ declare module '@tanstack/react-router' {
       id: '/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
+      preLoaderRoute: typeof IndexImport
+      parentRoute: typeof rootRoute
+    }
+    '/_layout': {
+      id: '/_layout'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof LayoutImport
       parentRoute: typeof rootRoute
     }
     '/about': {
@@ -59,6 +84,20 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutImport
+      parentRoute: typeof rootRoute
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardImport
+      parentRoute: typeof rootRoute
+    }
+    '/index copy': {
+      id: '/index copy'
+      path: '/index copy'
+      fullPath: '/index copy'
+      preLoaderRoute: typeof IndexcopyImport
       parentRoute: typeof rootRoute
     }
     '/not-found': {
@@ -81,8 +120,10 @@ declare module '@tanstack/react-router' {
 // Create and export the route tree
 
 export const routeTree = rootRoute.addChildren({
-  IndexLazyRoute,
+  IndexRoute,
   AboutRoute,
+  DashboardRoute,
+  IndexcopyRoute,
   NotFoundLazyRoute,
   ManageAccountIndexRoute,
 })
@@ -96,16 +137,28 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/_layout",
         "/about",
+        "/dashboard",
+        "/index copy",
         "/not-found",
         "/manage-account/"
       ]
     },
     "/": {
-      "filePath": "index.lazy.tsx"
+      "filePath": "index.tsx"
+    },
+    "/_layout": {
+      "filePath": "_layout.tsx"
     },
     "/about": {
       "filePath": "about.tsx"
+    },
+    "/dashboard": {
+      "filePath": "dashboard.tsx"
+    },
+    "/index copy": {
+      "filePath": "index copy.tsx"
     },
     "/not-found": {
       "filePath": "not-found.lazy.tsx"

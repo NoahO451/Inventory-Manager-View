@@ -7,8 +7,7 @@
 import Axios, { InternalAxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 
-function authRequestInterceptor(config: InternalAxiosRequestConfig) {
-  
+function authRequestInterceptor(config: InternalAxiosRequestConfig) { 
   const token = Cookies.get('auth_token');
   if (config.headers) {
   config.headers.Accept = "application/json";

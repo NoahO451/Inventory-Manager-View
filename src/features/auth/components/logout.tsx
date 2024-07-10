@@ -7,7 +7,7 @@ export default function LogoutButton() {
   const { reset } = useUserStore();
   
   const handleLogout = () => {
-    //localStorage.clear();
+    localStorage.clear();
     Cookies.remove('auth_token', { path: '/' });
     reset();
 

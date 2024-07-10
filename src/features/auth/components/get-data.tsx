@@ -5,6 +5,7 @@ import { useGetUser } from '../api/get-user';
 export default function GetData() {  
   const { isAuthenticated, isLoading } = useAuth0();
 
+  const userUuid = 'e7bd758c-e8bb-45f0-ab4d-e7a331b60729';
   const getUserQuery = useGetUser({userUuid});
 
   const handle = () => {

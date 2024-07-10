@@ -1,13 +1,19 @@
-import { PropsWithChildren, Suspense } from "react";
+import { createContext, PropsWithChildren, Suspense, useContext, useEffect } from "react";
 import { Spinner } from "@/components/ui/spinner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { createRouter, RouterProvider, useNavigate } from "@tanstack/react-router";
+import { routeTree } from "@/routeTree.gen";
+import { useAuth0 } from "@auth0/auth0-react";
+import AppProvider from "./app-provider";
+import { LoadingProvider } from "./features/auth/components/authLoadingContext";
 
-
-const queryClient: QueryClient = new QueryClient();
-
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false
+    },
+  },
+})
 const router = createRouter({
   routeTree,
   context: {
@@ -46,9 +52,7 @@ declare module "@tanstack/react-router" {
   }
 }
 
-export default function App({ children }: PropsWithChildren): JSX.Element | null {
-
-
+export default function App() {
   const { isAuthenticated } = useAuth0();
 
   return (
@@ -59,26 +63,11 @@ export default function App({ children }: PropsWithChildren): JSX.Element | null
         </div>
       }
     >
-      <Auth0Provider
-        domain={domain}
-        clientId={clientId}
-        authorizationParams={{
-          redirect_uri: window.location.origin,
-          audience: "",
-        }}
-        onRedirectCallback={(appState: any) => {
-          window.history.pushState(
-            {},
-            document.title,
-            appState?.returnTo || window.location.pathname
-          );
-        }}
-      >
+      <LoadingProvider>
         <QueryClientProvider client={queryClient}>
           <RouterProvider router={router} context={{ isAuthenticated }} />
-          { children }
         </QueryClientProvider>
-      </Auth0Provider>
+      </LoadingProvider>
     </Suspense>
   );
 }

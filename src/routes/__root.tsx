@@ -1,7 +1,11 @@
-import { createRootRouteWithContext, Link, Outlet } from '@tanstack/react-router'
-import { TanStackRouterDevtools } from '@tanstack/router-devtools'
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
-import { QueryClient } from '@tanstack/react-query';
+import {
+  createRootRouteWithContext,
+  Outlet,
+} from "@tanstack/react-router";
+import { TanStackRouterDevtools } from "@tanstack/router-devtools";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { QueryClient } from "@tanstack/react-query";
+import Navigation from "@/features/nav/side-nav";
 
 type RouterContext = {
   isAuthenticated: boolean;
@@ -9,23 +13,16 @@ type RouterContext = {
 };
 
 export const Route = createRootRouteWithContext<RouterContext>()({
-  component: () => (
-    <>
-      <div className="p-2 flex gap-2">
-        <Link to="/" className="[&.active]:font-bold">
-          Home
-        </Link>{' '}
-        <Link to="/about" className="[&.active]:font-bold">
-          About
-        </Link>
-        <Link to="/manage-account" className="[&.active]:font-bold">
-          Manage Account
-        </Link>
-      </div>
-      <hr />
-      <Outlet />
-      <TanStackRouterDevtools />
-      <ReactQueryDevtools />
-    </>
-  ),
-})
+  component: () => {
+
+    return (
+      <>
+        <Navigation />
+        <hr />
+        <Outlet />
+        <TanStackRouterDevtools />
+        <ReactQueryDevtools />
+      </>
+    );
+  },
+});
