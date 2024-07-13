@@ -1,18 +1,14 @@
-import { useAuthLoading } from "@/features/auth/components/authLoadingContext";
 import useUserStore from "@/hooks/useUserStore";
 import { useAuth0 } from "@auth0/auth0-react";
 import { createFileRoute, redirect } from '@tanstack/react-router'
 import { useEffect } from "react";
 
-export const Route = createFileRoute('/manage-account/')({
+export const Route = createFileRoute('/manage-account')({
   beforeLoad: ({ context }: any) => {
     if (!context.isAuthenticated) {
-      console.log('not logged in!')
       throw redirect({
         to: "/",
       });
-    } else {
-      console.log('/manage-account is logged in!')
     }
   },
   component: ManageAccount
@@ -21,16 +17,11 @@ export const Route = createFileRoute('/manage-account/')({
 function ManageAccount() {
   const userStore = useUserStore();
   const { isLoading } = useAuth0();
-  const { loading } = useAuthLoading();
 
   useEffect(() => {
-    if (!userStore.uuid && !isLoading) {
-      userStore.uuid;
-    }
-  }, [userStore, isLoading, loading]);
+  }, [userStore, isLoading]);
 
-  // Optional: Handle loading state
-  if (isLoading || !userStore.uuid|| loading) {
+  if (isLoading || !userStore?.firstName) {
     return <div>Loading...</div>;
   }
 

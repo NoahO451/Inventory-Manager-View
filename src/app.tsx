@@ -1,21 +1,21 @@
-import { createContext, PropsWithChildren, Suspense, useContext, useEffect } from "react";
-import { Spinner } from "@/components/ui/spinner";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { createRouter, RouterProvider, useNavigate } from "@tanstack/react-router";
+import { createRouter } from "@tanstack/react-router";
 import { routeTree } from "@/routeTree.gen";
-import { useAuth0 } from "@auth0/auth0-react";
 import AppProvider from "./app-provider";
-import { LoadingProvider } from "./features/auth/components/authLoadingContext";
 
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      refetchOnWindowFocus: false
+      refetchOnWindowFocus: false,
     },
   },
-})
+});
+
 const router = createRouter({
   routeTree,
+  // InnerWrap: ({children}) => {
+  //   return <Navigation>{children}</Navigation>
+  // },
   context: {
     isAuthenticated: false,
     queryClient,
@@ -53,21 +53,9 @@ declare module "@tanstack/react-router" {
 }
 
 export default function App() {
-  const { isAuthenticated } = useAuth0();
-
   return (
-    <Suspense
-      fallback={
-        <div className="flex h-screen w-screen items-center justify-center">
-          <Spinner size="xl" />
-        </div>
-      }
-    >
-      <LoadingProvider>
-        <QueryClientProvider client={queryClient}>
-          <RouterProvider router={router} context={{ isAuthenticated }} />
-        </QueryClientProvider>
-      </LoadingProvider>
-    </Suspense>
+      <QueryClientProvider client={queryClient}>
+        <AppProvider router={router}></AppProvider>
+      </QueryClientProvider>
   );
 }

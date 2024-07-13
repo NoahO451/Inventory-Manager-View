@@ -35,9 +35,13 @@ const useUserStore = create<UserState & UserActions>()(
       lastName: "",
       nickname: "",
       email: "",
-      sub: "",
-      setUser: (user) => set(user),
-      reset: () => set(initialUserState)
+      sub: "", 
+      setUser: (user) => {
+        set(user);
+      },
+      reset: () => {
+        set(initialUserState);
+      },
     }),
     {
       name: "user-data-storage",
