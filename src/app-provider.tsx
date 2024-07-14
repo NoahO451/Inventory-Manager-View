@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Spinner } from "./components/ui/spinner";
+import { Spinner } from "./components/ui/shadcn/spinner";
 import { useAuth0 } from "@auth0/auth0-react";
 import { RouterProvider } from "@tanstack/react-router";
 import { useGetUser } from "./features/auth/api/get-user";
@@ -14,7 +14,6 @@ type AppProviderProps = {
 export default function AppProvider({
   router,
 }: AppProviderProps): JSX.Element | null {
-  const userUuid = "e7bd758c-e8bb-45f0-ab4d-e7a331b60729";
   const {isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently, user} = useAuth0();
   const { setUser } = useUserStore();
   const [userData, setUserData] = useState(false);

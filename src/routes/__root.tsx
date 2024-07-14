@@ -1,13 +1,14 @@
 import {
   createRootRouteWithContext,
-  Link,
   Outlet,
 } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/router-devtools";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { QueryClient } from "@tanstack/react-query";
-import LogoutButton from "@/features/auth/components/logout";
-import Navigation from "@/features/nav/side-nav";
+import TopNav from "@/features/nav/components/top-nav";
+import SideNav from "@/features/nav/components/side-nav";
+
+import { PiSquaresFour } from "react-icons/pi";
 
 type RouterContext = {
   isAuthenticated: boolean;
@@ -16,11 +17,26 @@ type RouterContext = {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => {
+
     return (
       <>
-      <Navigation />
-      <LogoutButton />
-        <hr />
+        <div className="flex w-[300px]">
+          <SideNav
+              links= {[
+                {
+                  title: "Dashboard",
+                  label: "",
+                  icon: <PiSquaresFour />,
+                  variant: "default",
+                }]
+              }
+          />
+          <div className="flex justify-start">
+            <TopNav />
+          </div>
+        </div>
+
+
         <Outlet />
         <TanStackRouterDevtools />
         <ReactQueryDevtools />
