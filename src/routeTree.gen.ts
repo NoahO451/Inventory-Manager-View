@@ -12,6 +12,7 @@
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ManageAccountImport } from './routes/manage-account'
+import { Route as ConstructionImport } from './routes/construction'
 import { Route as IndexImport } from './routes/index'
 import { Route as AppIndexImport } from './routes/app/index'
 
@@ -19,6 +20,11 @@ import { Route as AppIndexImport } from './routes/app/index'
 
 const ManageAccountRoute = ManageAccountImport.update({
   path: '/manage-account',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const ConstructionRoute = ConstructionImport.update({
+  path: '/construction',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -43,6 +49,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexImport
       parentRoute: typeof rootRoute
     }
+    '/construction': {
+      id: '/construction'
+      path: '/construction'
+      fullPath: '/construction'
+      preLoaderRoute: typeof ConstructionImport
+      parentRoute: typeof rootRoute
+    }
     '/manage-account': {
       id: '/manage-account'
       path: '/manage-account'
@@ -64,6 +77,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
+  ConstructionRoute,
   ManageAccountRoute,
   AppIndexRoute,
 })
@@ -77,12 +91,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "__root.tsx",
       "children": [
         "/",
+        "/construction",
         "/manage-account",
         "/app/"
       ]
     },
     "/": {
       "filePath": "index.tsx"
+    },
+    "/construction": {
+      "filePath": "construction.tsx"
     },
     "/manage-account": {
       "filePath": "manage-account.tsx"

@@ -8,7 +8,13 @@ import { QueryClient } from "@tanstack/react-query";
 import TopNav from "@/features/nav/components/top-nav";
 import SideNav from "@/features/nav/components/side-nav";
 
+// Icons
 import { PiSquaresFour } from "react-icons/pi";
+import { PiCalendarDots } from "react-icons/pi";
+import { PiPackage } from "react-icons/pi";
+import { PiTag } from "react-icons/pi";
+import { PiTable } from "react-icons/pi";
+import { FaEbay } from "react-icons/fa";
 
 type RouterContext = {
   isAuthenticated: boolean;
@@ -20,24 +26,72 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
     return (
       <>
-        <div className="flex w-[300px]">
-          <SideNav
-              links= {[
+        {/* Nav */}
+        <div className="flex h-screen">
+          <div className="flex w-[220px]">
+            <SideNav
+              links={[
                 {
+                  id: 0,
                   title: "Dashboard",
                   label: "",
+                  to: "/",
                   icon: <PiSquaresFour />,
-                  variant: "default",
-                }]
-              }
-          />
-          <div className="flex justify-start">
-            <TopNav />
+                  variant: "menuItem",
+                },
+                {
+                  id: 1,
+                  title: "Events",
+                  label: "",
+                  to: "/events",
+                  icon: <PiCalendarDots />,
+                  variant: "menuItem",
+                },
+                {
+                  id: 2,
+                  title: "Inventory",
+                  label: "",
+                  to: "/inventory",
+                  icon: <PiPackage />,
+                  variant: "menuItem",
+                },
+                {
+                  id: 3,
+                  title: "Sales",
+                  label: "",
+                  to: "/sales",
+                  icon: <PiTag />,
+                  variant: "menuItem",
+                },
+                {
+                  id: 4,
+                  title: "Reports",
+                  label: "",
+                  to: "/reports",
+                  icon: <PiTable />,
+                  variant: "menuItem",
+                },
+                {
+                  id: 5,
+                  title: "eBay",
+                  label: "",
+                  to: "/ebay",
+                  icon: <FaEbay />,
+                  variant: "menuItem",
+                }
+              ]}
+            />
+          </div>
+          <div className="flex-auto grow">
+            <div className="">
+              <TopNav />
+            </div>
+            {/* Page Content */}
+            <div>
+              <Outlet />
+            </div>
           </div>
         </div>
-
-
-        <Outlet />
         <TanStackRouterDevtools />
         <ReactQueryDevtools />
       </>

@@ -1,14 +1,20 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line no-undef
 module.exports = {
   darkMode: ["class"],
   content: [
-    './pages/**/*.{ts,tsx}',
-    './components/**/*.{ts,tsx}',
-    './app/**/*.{ts,tsx}',
-    './src/**/*.{ts,tsx}',
+    "./pages/**/*.{ts,tsx}",
+    "./components/**/*.{ts,tsx}",
+    "./app/**/*.{ts,tsx}",
+    "./src/**/*.{ts,tsx}",
   ],
   prefix: "",
   theme: {
+    fontFamily: {
+      sans: [
+        '"Inter"'
+      ],
+    },
     container: {
       center: true,
       padding: "2rem",
@@ -16,20 +22,38 @@ module.exports = {
         "2xl": "1400px",
       },
     },
+    // colors: {
+    //   mirage: {
+    //     50: "#f5f6fa",
+    //     100: "#e9ecf5",
+    //     200: "#cfd7e8",
+    //     300: "#a4b5d5",
+    //     400: "#738ebd",
+    //     500: "#5270a5",
+    //     600: "#3f578a",
+    //     700: "#344770",
+    //     800: "#2e3d5e",
+    //     900: "#2a3650",
+    //     950: "#191f2f",
+    //   },
+    // },
     extend: {
       colors: {
-        bodyBackground: '#F3F3F3',
+        bodyBackground: "hsl(0, 0%, 95%)",
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        menuHover: "#e9ecf5",
+        light: "#9F9FA7",
+        activeMenuItem: "hsla(0, 0%, 85%, .15)",
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
         },
         secondary: {
-          DEFAULT: "hsl(var(--secondary))",
+          DEFAULT: "hsl(224, 31%, 14%)",
           foreground: "hsl(var(--secondary-foreground))",
         },
         destructive: {
@@ -74,5 +98,6 @@ module.exports = {
       },
     },
   },
+  // eslint-disable-next-line no-undef
   plugins: [require("tailwindcss-animate")],
-}
+};

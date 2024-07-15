@@ -35,7 +35,7 @@ export default function TopNav(): JSX.Element | undefined {
       <nav className="bg-white">
         <div className="mx-auto max-w-7xl px-6 py-2">
           <div className="flex h-10 items-center justify-between">
-            <p className="font-semibold">Dashboard</p>
+            <p className="text-xl font-semibold">Dashboard</p>
             <div className="flex justify-evenly items-center gap-2">
               <div>
                 <Button variant="ghost" className="rounded-full" size="icon">
