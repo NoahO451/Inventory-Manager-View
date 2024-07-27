@@ -1,7 +1,18 @@
 import { useQuery, queryOptions } from '@tanstack/react-query';
 import { QueryConfig } from '@/lib/query-config';
-import { GetUserResponse } from '@/types/api-types';
 import { api } from '@/lib/api-client';
+
+export interface GetUserResponse {
+  userUuid: string;
+  auth0UserId: string;
+  firstName: string;
+  lastName: string;
+  nickname: string;
+  businesses?: any;
+  lastLogin?: Date;
+  isPremiumMember: boolean;
+  isDeleted: boolean;
+}
 
 function getUser(userUuid: string): Promise<GetUserResponse> {
   return api.get(`/api/users/${userUuid}`);

@@ -23,7 +23,6 @@ type RouterContext = {
 
 export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => {
-
     return (
       <>
         {/* Nav */}
@@ -35,7 +34,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   id: 0,
                   title: "Dashboard",
                   label: "",
-                  to: "/",
+                  to: "/app",
                   icon: <PiSquaresFour />,
                   variant: "menuItem",
                 },
@@ -43,7 +42,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   id: 1,
                   title: "Events",
                   label: "",
-                  to: "/events",
+                  to: "/construction",
                   icon: <PiCalendarDots />,
                   variant: "menuItem",
                 },
@@ -51,7 +50,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   id: 2,
                   title: "Inventory",
                   label: "",
-                  to: "/inventory",
+                  to: "/app/inventory",
                   icon: <PiPackage />,
                   variant: "menuItem",
                 },
@@ -59,7 +58,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   id: 3,
                   title: "Sales",
                   label: "",
-                  to: "/sales",
+                  to: "/construction",
                   icon: <PiTag />,
                   variant: "menuItem",
                 },
@@ -67,7 +66,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   id: 4,
                   title: "Reports",
                   label: "",
-                  to: "/reports",
+                  to: "/construction",
                   icon: <PiTable />,
                   variant: "menuItem",
                 },
@@ -75,7 +74,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   id: 5,
                   title: "eBay",
                   label: "",
-                  to: "/ebay",
+                  to: "/construction",
                   icon: <FaEbay />,
                   variant: "menuItem",
                 }

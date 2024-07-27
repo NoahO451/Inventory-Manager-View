@@ -6,6 +6,6 @@ export const Route = createFileRoute("/app/")({
 
 function Index() { 
     return (
-        <h1>Welcome to index</h1>
+        <h1>Welcome to app index</h1>
     )
 }
