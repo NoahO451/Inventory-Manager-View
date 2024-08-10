@@ -36,10 +36,6 @@ function getAllInventoryItemsOptions(userUuid?: string, businessUuid?: string) {
     });
 }
 
-/**
- * Options for get user
- * Only call get user if we authenticatedc, have a jwt, and don't have userdata
- */
 type UseGetAllInventoryOptions = {
     userUuid?: string;
     businessUuid?: string;

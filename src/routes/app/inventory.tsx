@@ -37,21 +37,20 @@ function Inventory() {
 
   const inventoryItems = getAllInventoryItemsQuery.data?.map(items => {
     return (
-      <ul>
-        <li>{items.inventoryItemUuid}</li>
+      <ul className="p-4">{items.inventoryItemUuid}
         <li>{items.name}</li>
         <li>{items.description}</li>
         <li>{items.sku}</li>
         <li>{items.cost}</li>
         <li>{items.serialNumber}</li>
-        <li>{items.purchaseDate?.toDateString()}</li>
+        <li>{items.purchaseDate?.toLocaleString()}</li>
         <li>{items.supplier}</li>
         <li>{items.brand}</li>
         <li>{items.model}</li>
         <li>{items.quantity}</li>
         <li>{items.reorderQuantity}</li>
         <li>{items.location}</li>
-        <li>{items.experationDate?.toDateString()}</li>
+        <li>{items.experationDate?.toLocaleString()}</li>
         <li>{items.category}</li>
         <li>{items.customPackageUuid}</li>
         <li>{items.itemWeightG}</li>
@@ -67,7 +66,7 @@ function Inventory() {
     return (
       <div className="p-4">
         <h1>Welcome to inventory</h1>
-        <div>{inventoryItems}</div>
+        <div className="flex">{inventoryItems}</div>
       </div>
     )
   };
