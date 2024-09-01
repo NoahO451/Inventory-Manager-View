@@ -30,6 +30,7 @@ export default defineConfig({
         target: 'http://localhost:6060', 
         changeOrigin: true,
         secure: false,
+        rewrite: (path) => path.replace(/^\/app/, '/api'), // Rewrite /app to /api       
         /** Debug logging */
         // configure: (proxy, _options) => {
         //   proxy.on('error', (err, _req, _res) => {
@@ -43,7 +44,12 @@ export default defineConfig({
         //   });
         // },
       },
-      
+      '/app/api': {
+        target: 'http://localhost:6060', 
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/app/, ''), 
+      },
     },
   },
 })

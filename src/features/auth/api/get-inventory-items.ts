@@ -29,7 +29,7 @@ function getAllInventoryItems(userUuid?: string, businessUuid?: string): Promise
     return api.get(`api/inventory-items/user/${userUuid}/business/${businessUuid}`);
 }
 
-function getAllInventoryItemsOptions(userUuid?: string, businessUuid?: string) {
+export function getAllInventoryItemsOptions(userUuid?: string, businessUuid?: string) {
     return queryOptions({
         queryKey: ['user', userUuid, 'business', businessUuid],
         queryFn: () => getAllInventoryItems(userUuid, businessUuid),

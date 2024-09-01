@@ -1,10 +1,17 @@
+import { Button } from "@/components/ui/shadcn/button";
 import { Spinner } from "@/components/ui/shadcn/spinner";
 import { useGetAllInventoryItems } from "@/features/auth/api/get-inventory-items";
+import { useCreateInventoryItem } from "@/features/inventory/api/create-inventory-item";
+import { Payment, columns } from "@/features/inventory/components/columns";
+import { DataTable } from "@/features/inventory/components/data-table";
+import { InventoryItemTableData } from "@/features/inventory/components/inventory-table/intentory-data-table";
 import useUserStore from "@/hooks/useUserStore";
 import { createFileRoute, redirect } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
+
 
 export const Route = createFileRoute("/app/inventory")({
-  beforeLoad: ({ context }: any) => {
+  beforeLoad: async ({ context }: any) => {
     if (!context.isAuthenticated) {
       throw redirect({
         to: "/",
@@ -14,79 +21,47 @@ export const Route = createFileRoute("/app/inventory")({
   component: Inventory,
 })
 
-/**
- * Make a "get-inventory-items" api hook to call the GetAllInventoryItems end point
- * Import and call the hook here to get all inventory items for the user/business
- * 
- * For each item returned from the API, show them in a simple list with all of their
- * relevant information available. Don't concern yourself with styling anything yet. 
- * 
- * Additional: 
- * - You'll need to get the user's current UUID. Use the custom hook we have called useUserStore. 
- *   Useage can be found in the Zustand documentation or by referencing manage-account.tsx and/or
- *   app-provider.tsx. 
- * 
- * - Refer to get-user.ts to see an example of how we get the user with a custom hook. 
- */
+/*
+*
+* Move the get-inventory-items.ts hook from feature/auth/api into feature/inventory/api folder
+* 
+* Goal: Now that we have the data coming down from the API for a user's inventory items, we 
+* need to move and filter the data into a table to display it nicely. 
+* 
+* 1. There will be too much information returned from the API since, for example, we don't need
+*    experationDate or supplier in the table. That info will show up in a modal or page later on. 
+*    As such, take the data you do have from the API, and place it into a new type called 
+*    "InventoryItemTableData." This is located in features/inventory/components/inventory-table. 
+*    This type represents the information we'll display in the table. As such, it will be 
+*    missing a lot of the properties from the GetInventoryItemsResponse you created. Try using 
+*    Array.map to accomplish this. 
+* 2. Next, you will create an async function that returns a Promise<InventoryItemTableData[]> 
+* 3. This function will make the get all inventory items call you made in your hook to obtain 
+*    all inventory items for a user. 
+* 4. Call this function in a useEffect in the Inventory() function. 
+* 
+* https://ui.shadcn.com/docs/components/data-table#render-the-table
+*/
 
 function Inventory() {
-  const businessUuid = "2b708a94-19d6-402b-b9c4-e2fef0e3f5aa"; //change this to the second business Uuid once I make it 
-  const userStore = useUserStore();
-  const userUuid = userStore.uuid;
-  const getAllInventoryItemsQuery = useGetAllInventoryItems({ userUuid, businessUuid })
+  // Use useState to set the data you get back from your API call
+  //const [data, setData] = useState<InventoryItemTableData[]>([]);
 
-  const inventoryItems = getAllInventoryItemsQuery.data?.map(items => {
-    return (
-      <ul className="p-4">{items.inventoryItemUuid}
-        <li>{items.name}</li>
-        <li>{items.description}</li>
-        <li>{items.sku}</li>
-        <li>{items.cost}</li>
-        <li>{items.serialNumber}</li>
-        <li>{items.purchaseDate?.toLocaleString()}</li>
-        <li>{items.supplier}</li>
-        <li>{items.brand}</li>
-        <li>{items.model}</li>
-        <li>{items.quantity}</li>
-        <li>{items.reorderQuantity}</li>
-        <li>{items.location}</li>
-        <li>{items.experationDate?.toLocaleString()}</li>
-        <li>{items.category}</li>
-        <li>{items.customPackageUuid}</li>
-        <li>{items.itemWeightG}</li>
-        <li>{items.isListed}</li>
-        <li>{items.isLot}</li>
-        <li>{items.notes}</li>
-      </ul>
-    )
-  }
-  )
+  useEffect(() => {
+  // Fetch data comes here
+  }, []);
 
-  if (!getAllInventoryItemsQuery.isLoading && getAllInventoryItemsQuery.data) {
-    return (
-      <div className="p-4">
-        <h1>Welcome to inventory</h1>
-        <div className="flex">{inventoryItems}</div>
-      </div>
-    )
-  };
-
-  if (!getAllInventoryItemsQuery.isLoading && !getAllInventoryItemsQuery.data) {
-    return (
-      <div className="p-4">
-        <h1>Welcome to inventory</h1>
-        <div>
-          <p>It looks like you don't have any inventory items. Would you like to make one?</p>
-        </div>
-      </div>
-    )
-  };
-
-  if (getAllInventoryItemsQuery.isLoading) {
-    return (
-      <div className="flex h-screen w-screen items-center justify-center">
-        <Spinner size="xl" />
-      </div>
-    );
-  }
+  // Add loading here, change the boolean if needed
+  // if (getAllInventoryItemsQuery.isLoading) {
+  //   return (
+  //     <div className="flex h-screen w-screen items-center justify-center">
+  //       <Spinner size="xl" />
+  //     </div>
+  //   );
+  // }
+  return (
+    <div className="container mx-auto py-10">
+      <DataTable columns={columns} data={data} />
+    </div>
+  );
 }
