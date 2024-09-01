@@ -2,9 +2,7 @@ import { Button } from "@/components/ui/shadcn/button";
 import { Spinner } from "@/components/ui/shadcn/spinner";
 import { useGetAllInventoryItems } from "@/features/auth/api/get-inventory-items";
 import { useCreateInventoryItem } from "@/features/inventory/api/create-inventory-item";
-import { Payment, columns } from "@/features/inventory/components/columns";
-import { DataTable } from "@/features/inventory/components/data-table";
-import { InventoryItemTableData } from "@/features/inventory/components/inventory-table/intentory-data-table";
+import { DataTable, InventoryItemTableData, columns } from "@/features/inventory/components/inventory-table/intentory-data-table";
 import useUserStore from "@/hooks/useUserStore";
 import { createFileRoute, redirect } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
@@ -44,21 +42,39 @@ export const Route = createFileRoute("/app/inventory")({
 */
 
 function Inventory() {
-  // Use useState to set the data you get back from your API call
-  //const [data, setData] = useState<InventoryItemTableData[]>([]);
+  // Use useState to set the data you get back from your API call (╯°□°）╯︵ ┻━┻
+  const [data, setData] = useState<InventoryItemTableData[]>([]);
+
+  // Delete test data when ready
+  const testData = [
+    {
+      id: "728ed52f",
+      item: "Space Invaders (Nintendo 64, 1997)",
+      quantity: 3,
+    },
+    {
+      id: "91b7c2a4",
+      item: "Super Mario 64 (Nintendo 64, 1996)",
+      quantity: 5,
+    },
+  ];
 
   useEffect(() => {
-  // Fetch data comes here
+    // Fetch data comes here. 
+    // setData to your actual InventoryItemTableData response data 
+    // if needed. 
+    setData(testData);
   }, []);
 
-  // Add loading here, change the boolean if needed
-  // if (getAllInventoryItemsQuery.isLoading) {
-  //   return (
-  //     <div className="flex h-screen w-screen items-center justify-center">
-  //       <Spinner size="xl" />
-  //     </div>
-  //   );
-  // }
+// Add loading here, change the boolean if needed
+//   if (getAllInventoryItemsQuery.isLoading) {
+//     return (
+//       <div className="flex h-screen w-screen items-center justify-center">
+//         <Spinner size="xl" />
+//       </div>
+//     );
+//   }
+// }
   return (
     <div className="container mx-auto py-10">
       <DataTable columns={columns} data={data} />
