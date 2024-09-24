@@ -5,10 +5,11 @@ import { Auth0Provider } from '@auth0/auth0-react';
 
 import './index.css'
 
-
+const domain: string = "";
+const clientId: string = "";
 
 const rootElement = document.getElementById('root')!
-if (!rootElement.innerHTML) { 
+if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement)
   root.render(
     <StrictMode>
@@ -25,6 +26,7 @@ if (!rootElement.innerHTML) {
         cacheLocation='localstorage'
         authorizationParams={{
           redirect_uri: window.location.origin,
+          audience: ""
         }}
         onRedirectCallback={(appState: any) => {
           window.history.pushState(
